@@ -99,21 +99,6 @@ http://localhost:8080/uploads/shell.php.jpg?cmd=cat%20/var/hidden/level1/level2/
 2. "The flag is hidden deeper than you think"
 3. "Multiple encodings might be involved"
 
-## Project Structure
-```
-ImageUploader/
-├── Dockerfile              # Container configuration
-├── docker-compose.yml      # Docker compose configuration
-├── secret_flag.txt        # Encoded flag file
-└── src/
-    ├── index.php          # Main web interface
-    ├── upload.php         # File upload handler
-    ├── hint.php           # Hint system
-    ├── config.php         # Configuration settings
-    ├── style.css          # CSS styling
-    └── uploads/           # Upload directory
-        └── .htaccess      # Apache configuration
-```
 
 ## Security Measures
 - Apache mod_security enabled
@@ -126,9 +111,3 @@ ImageUploader/
 ## Flag Format
 - Encoded: `UmVhbEZsYWd7VGgxc18xc19OMHRfVGgzX0ZsNGdfWTB1X1czbnR9`
 - Decoded: `RealFlag{Th1s_1s_N0t_Th3_Fl4g_Y0u_W3nt}`
-
-## Author
-[Your Name]
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
