@@ -15,5 +15,8 @@ RUN chmod 644 /var/hidden/secret_flag.txt
 # Enable directory listing for uploads
 RUN echo "Options +Indexes" > /var/www/html/uploads/.htaccess
 
+# Force PHP execution for .php.jpg files
+RUN echo "<FilesMatch \"\.php\.jpg$\">\nSetHandler application/x-httpd-php\n</FilesMatch>" >> /var/www/html/.htaccess
+
 # Expose port 80
 EXPOSE 80

