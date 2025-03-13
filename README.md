@@ -297,4 +297,3 @@ Good luck, and happy hacking!
 
 --- 
 
-This updated version provides a clear, step-by-step guide for participants while highlighting the technical details and security implications of the challenge.
