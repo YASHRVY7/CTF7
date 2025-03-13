@@ -41,7 +41,7 @@ ImageUploader is a seemingly innocent image upload service that contains multipl
 
 1. **Clone the Repository**
 ```bash
-[git clone [https://github.com/YASHRVY7/CTF7.git]
+git clone https://github.com/YASHRVY7/CTF7.git
 cd CTF7
 ```
 
