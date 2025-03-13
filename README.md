@@ -1,5 +1,8 @@
 # ImageUploader CTF Challenge
 
+![Uploading image.png…]()
+
+
 ## Challenge Details
 
 ### Category
