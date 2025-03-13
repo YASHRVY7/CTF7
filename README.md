@@ -1,6 +1,6 @@
 # ImageUploader CTF Challenge
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/24b28ff2-c9bc-45cc-86f0-0376257f1d23)
 
 
 ## Challenge Details
