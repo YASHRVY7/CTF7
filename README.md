@@ -9,7 +9,7 @@
 - Base64 Encoding
 
 ### Description
-ImageUploader is a seemingly innocent image upload service that contains multiple security vulnerabilities. Participants must exploit file upload restrictions and use command injection to discover and decode a hidden flag.
+CTF7 is a seemingly innocent image upload service that contains multiple security vulnerabilities. Participants must exploit file upload restrictions and use command injection to discover and decode a hidden flag.
 
 ## Hints 🔍
 
