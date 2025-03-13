@@ -7,21 +7,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         die("<p class='error'>Error uploading file!</p>");
     }
 
-    // Get file extension
-    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-
-    // Weak validation: only checks extension
-    if (!in_array($ext, $allowed)) {
-        die("<p class='error'>Only image files (.jpg, .jpeg, .png, .gif) are allowed!</p>");
+    // Get file extension - modified to handle double extensions
+    $filename = $file['name'];
+    $ext = '';
+    
+    // Check if file ends with .jpg
+    if (substr(strtolower($filename), -4) === '.jpg') {
+        $ext = 'jpg';
+    } else {
+        die("<p class='error'>Invalid file extension!</p>");
     }
 
-    // Move file to uploads directory
+    // Move file to uploads directory with original name to preserve double extension
     $upload_dir = __DIR__ . '/uploads/';
-    $file_path = $upload_dir . basename($file['name']);
-    move_uploaded_file($file['tmp_name'], $file_path);
+    $file_path = $upload_dir . basename($filename);
 
-    echo "<p class='success'>File uploaded! View it here: <a href='uploads/" . htmlspecialchars($file['name']) . "'>" . htmlspecialchars($file['name']) . "</a></p>";
+    if (move_uploaded_file($file['tmp_name'], $file_path)) {
+        echo "<p class='success'>File uploaded! View it here: <a href='uploads/" . htmlspecialchars($filename) . "'>" . htmlspecialchars($filename) . "</a></p>";
+    } else {
+        echo "<p class='error'>Failed to move uploaded file.</p>";
+    }
 } else {
     echo "<p class='error'>No file uploaded.</p>";
 }
