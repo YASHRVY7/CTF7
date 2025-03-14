@@ -14,7 +14,7 @@ ImageUploader is a seemingly innocent image upload service that contains multipl
 ## Hints 🔍
 1. "Check the file extension - sometimes what you see isn't what you get..."
 2. "A picture is worth a thousand words, but what if it contains code?"
-3. "The flag is hidden deep within the server, but where exactly? Try exploring /var/hidden/"
+3. "The flag is hidden deep within the server, but where exactly? Try exploring /var"
 4. "Remember to decode what you find - things aren't always what they seem!"
 5. "JFIF might be useful in your journey..."
 
