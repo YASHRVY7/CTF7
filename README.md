@@ -11,9 +11,6 @@
 ### Description
 ImageUploader is a seemingly innocent image upload service that contains multiple security vulnerabilities. Participants must exploit file upload restrictions and use command injection to discover and decode a hidden flag.
 
-### Difficulty Level
-- Medium
-
 ## Hints 🔍
 1. "Check the file extension - sometimes what you see isn't what you get..."
 2. "A picture is worth a thousand words, but what if it contains code?"
